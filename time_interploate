@@ -1,0 +1,42 @@
+function tb_TX_H()
+    close all
+    res_dir = '/home/michael/simulation/tb_TX_H/spectre/config/psf';
+    res(1) = cds_srr(res_dir ,'tran-tran','pad');    
+    V1  = res(1).V*1e3;
+    time = res(1).time*1e9;   
+    plot(time, V1, 'LineWidth',3,'color','blue','LineStyle','-')
+    grid on        
+    hold on            
+    set(gca, 'YTick', -500:50:500)
+    axis([48 50 -500 500])
+    xlabel('Time (ns)')
+    ylabel('Voltaege (mV)')       
+    title('PA PAD Output: Transient Simulation (PEX)' ,'interpreter', 'none' )    
+    legend({'PAD'});
+    % figure
+    % plot(1:length(time),time, 'LineWidth',3,'color','blue','LineStyle','-')
+    
+    figure    
+    pts = 2048;
+    l = length(V1);
+    
+    VV = resple(V1(9*l/10:l), 8192);
+    ts = 5/(length(VV)-1);
+    plot(45:ts:50,  VV, 'LineWidth',3,'color','blue','LineStyle','-')
+    
+    figure
+    V1F = 2*fft(VV,pts)/pts;
+    fs = 1/(2*ts);
+    F = 0:fs/(pts/2-1):fs;
+    stem(F, abs(V1F(1:pts/2)), 'LineWidth',3,'color','blue','LineStyle','-')
+    grid on        
+    hold on            
+    set(gca, 'YTick', 0:10:180)
+    axis([0 30 0 180])
+    xlabel('Frequency (GHz)')
+    ylabel('Voltaege (mV)')       
+    title('PA PAD Output: Transient Simulation (PEX)' ,'interpreter', 'none' )    
+    legend({'PAD'});
+    print(gcf,'-dpng','tb_TX_H_pad.png');       
+    print(gcf,'-dpng','tb_TX_H_pad_fft.png');
+end

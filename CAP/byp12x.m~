@@ -1,0 +1,96 @@
+function byp12x()
+    close all
+    res_dir = '/home/michael/simulation/tb_byp12x/spectre/config/psf';
+               
+        res0 = cds_srr(res_dir ,'ac-ac','V0:p');
+        res1 = cds_srr(res_dir ,'ac-ac','V1:p');
+        YA = res0.I;           
+        ZA = 1./YA;
+        freq  = res0.freq;        
+        w = 2*pi*freq;
+        CA = abs(1e15*imag(YA)./w);
+        RRA = (ZA);
+        IIA = real(ZA);
+        
+        semilogx(freq, RRA, 'LineWidth',3,'color','blue')
+        hold on
+        semilogx(freq, IIA, 'LineWidth',3,'color','red')
+        grid on
+        % legend('DIFF-I');
+        axis([1 4e10 -2e3 10])
+        %set(gca, 'YTick', 700:100:1500)
+        xlabel('Frequency (Hz)')
+        ylabel('Reactance (Ohm)')       
+        title(['byp12x AC response' ],'interpreter', 'none' )
+        legend({'Real(Z)','Imag(Z)'});
+        print(gcf,'-dpng','-r500','byp12x_ac.png');               
+        print(gcf,'-depsc2','byp12x_ac.eps');               
+        
+        figure
+        semilogx(freq, IIA./RRA, 'LineWidth',3,'color','red')
+        grid on        
+        %axis([1 4e10 0 10])
+        %set(gca, 'YTick', 0:1e4:1e5)
+        xlabel('Frequency (Hz)')
+        ylabel('Quality Factor')       
+        title('byp12x Q facor  ' ,'interpreter', 'none' )
+        
+        print(gcf,'-dpng','-r500',['byp12x_q.png']);               
+        print(gcf,'-depsc2','byp12x_q.eps');    
+         figure
+        semilogx(freq, CA, 'LineWidth',3,'color','red')
+        grid on        
+        
+        %set(gca, 'YTick', 0:1e4:1e5)
+        xlabel('Frequency (Hz)')
+        ylabel('Capacitance (fF)')       
+        
+        title('byp12x Cap' ,'interpreter', 'none' )
+        print(gcf,'-dpng','-r500',['byp12x_C_.png']);               
+        print(gcf,'-depsc2','byp12x_C.eps'); 
+        
+        
+        figure
+        YB = res1.I;  
+        ZB = 1./YB;
+        CB = abs(1e15*imag(YB)./w);
+        RRB = imag(ZB);
+        IIB = real(ZB);
+        semilogx(freq, RRB, 'LineWidth',3,'color','blue')
+        hold on
+        semilogx(freq, IIB, 'LineWidth',3,'color','red')
+        grid on        
+        axis([1 4e10 -2e3 10])
+        %axis([1 4e10 -0.005 2e-3])
+        %set(gca, 'YTick', 0:1e4:1e5)
+        xlabel('Frequency (Hz)')
+        ylabel('Reactance (Ohm)')       
+        title(['byp12x AC response (PEX)'  ],'interpreter', 'none' )
+        legend({'Real(Z)','Imag(Z)'});
+        print(gcf,'-dpng','-r500',['byp12x_ac_pex_.png']);               
+        print(gcf,'-depsc2','byp12x_ac_pex.eps');  
+        
+        figure
+        semilogx(freq, CB, 'LineWidth',3,'color','red')
+        grid on        
+        
+        %set(gca, 'YTick', 0:1e4:1e5)
+        xlabel('Frequency (Hz)')
+        ylabel('Capacitance (fF)')       
+        
+        title('byp12x Cap  (PEX)' ,'interpreter', 'none' )
+        print(gcf,'-dpng','-r500',['byp12x_C_pex_.png']);               
+        print(gcf,'-depsc2','byp12x_C_pex.eps'); 
+        
+        figure
+        semilogx(freq, IIB./RRB, 'LineWidth',3,'color','red')
+        grid on        
+        
+        %set(gca, 'YTick', 0:1e4:1e5)
+        xlabel('Frequency (Hz)')
+        ylabel('Quality Factor')       
+        
+        title('byp12x Q facor  (PEX)' ,'interpreter', 'none' )
+        print(gcf,'-dpng','-r500',['byp12x_q_pex_.png']);               
+        print(gcf,'-depsc2','byp12x_q_pex.eps');       
+end

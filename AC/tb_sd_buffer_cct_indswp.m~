@@ -1,0 +1,15 @@
+% tb_IF_TP('I15', 'Mode-I PreSim');
+% tb_IF_TP('I16', 'Mode-II PreSim')
+% tb_IF_TP('I7', 'Mode-I PostSim')
+% tb_IF_TP('I8', 'Mode-II PostSim')
+function tb_sd_buffer_cct
+    close all
+    addpath('..')
+    res_dir = '/home/michael/simulation/tb_sd_buffer_cct/spectre/config/psf';
+    V3 = cds_srr(res_dir ,'ac-ac', 'vo\+');    
+    V4 = cds_srr(res_dir ,'ac-ac', 'vo\-');   
+    V5 = cds_srr(res_dir ,'ac-ac', 'vo_pex\+');    
+    V6 = cds_srr(res_dir ,'ac-ac', 'vo_pex\-');   
+    
+    legend(num2str(res.LL'))
+end

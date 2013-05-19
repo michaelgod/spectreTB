@@ -1,0 +1,45 @@
+function plot_acv_diff(V1, V2, name,varargin)   
+ if(isempty(varargin))
+    lcolor = 'blue';
+    lstyle = '-';
+    Bplot = 0;
+ elseif(nargin == 4)
+    lcolor = 'blue';
+    lstyle = '-';
+    Bplot  = varargin{1};
+ elseif(nargin == 6)
+    lcolor = varargin{1};
+    lstyle = varargin{2};
+    Bplot  = varargin{3};
+ else
+     error(['Wrong Number of Arguments; nargin = ' num2str(nargin)])
+ end   
+    V = abs(V1.V - V2.V);
+    freq = V1.freq;
+    figure(1)
+    plot(freq, V, 'LineWidth',3,'color',lcolor ,'LineStyle',lstyle)          
+    grid on
+    xlabel('Frequency (GHz)')
+    ylabel('Voltage (V)')       
+    title([name '-AC Simulation (Diff)'] ,'interpreter', 'none' )     
+    
+    
+    if(Bplot)
+        legend({[name 'Diff']},'interpreter', 'none');     
+        print(gcf,'-dpng',[name '-ACDiff.png']);       
+        print(gcf,'-deps',[name '-ACDiff.eps']);
+    end
+    
+    figure(2)
+    plot(freq, dB(V), 'LineWidth',3,'color',lcolor ,'LineStyle',lstyle)          
+    grid on
+    xlabel('Frequency (GHz)')
+    ylabel('Voltage (dBV)')       
+    title([name '-AC Simulation (Diff)'] ,'interpreter', 'none' )     
+        
+    if(Bplot)
+        legend({[name 'Diff']},'interpreter', 'none'); 
+        print(gcf,'-dpng',[name '-ACDiffdB.png']);       
+        print(gcf,'-deps',[name '-ACDiffdB.eps']);
+    end
+end

@@ -1,0 +1,19 @@
+function tb_sd_buffer_load()
+    close all
+    res_dir = '/home/michael/simulation/tb_sd_buffer_ind/spectre/schematic/psf';
+    IA = cds_srr(res_dir ,'ac-ac','V0:p');
+    IB = cds_srr(res_dir ,'ac-ac','V1:p');
+    plot_c_diff(IA, IB, 'Pre-driver Load (CM)')
+    IA = cds_srr(res_dir ,'ac-ac','V0:p');
+    IB = cds_srr(res_dir ,'ac-ac','V1:p');
+    plot_c_diff(IA, IB, 'Pre-driver Load (CM)')
+    
+    VA = cds_srr(res_dir ,'ac-ac','V0:p');
+    VB = cds_srr(res_dir ,'ac-ac','V1:p');
+    plot_l_diff(IA, IB, 'Pre-driver Load (CM)')
+    VC = cds_srr(res_dir ,'ac-ac','V0:p');
+    VD = cds_srr(res_dir ,'ac-ac','V1:p');
+    plot_l_diff(IA, IB, 'Pre-driver Load (CM)')
+plot_l_diff(IA, IB, 'Pre-driver Load (CM)')
+    
+end
